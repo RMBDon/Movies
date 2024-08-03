@@ -14,8 +14,13 @@ const TopRatedMovie = document.getElementById("movies-toprated");
 const PopularMovie = document.getElementById("movies-popular");
 const MyMovieList = document.getElementById("movies-list");
 const SeriesListDiv = document.getElementById("series-picks");
+const TopRatedKoreanMoviesDiv = document.getElementById("TopRatedKoreanMovies");
+const TopRatedKoreanTVDiv = document.getElementById("TopRatedKoreanTV");
+
+
 let bestDomain = '';
 var OnMyList = false;
+<!--
 window.onload = () => {
   SearchList.style.display = "none";
   document.getElementsByClassName('title')[0x0].style.display = 'none';
@@ -31,11 +36,52 @@ window.onload = () => {
   GetSimilar();
   GetRecommendations();
   GetTopRated();
+  GetTopRatedKoreanMovies();
+  GetTopRatedKoreanTV();
   GetPopular();
   
   process("my_storage");
   tvid.forEach(_0x26177f => {
     GetSeriesList(_0x26177f);
+  });
+};
+-->
+window.onload = () => {
+  SearchList.style.display = "none";
+  document.getElementsByClassName('title')[0].style.display = 'none';
+  const container = document.getElementsByClassName("container")[0];
+  const headerDiv = document.createElement("div");
+  headerDiv.innerHTML = `
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <div style="display: flex;align-items: center;">
+        <img src="movie/img/R.gif" width="40" height="40" />
+        <a href="anime.html" style="text-decoration:none;color:#ccc">Click Here for Animes</a>
+      </div>
+      <div id="searchDiv" style="display: flex;">
+        <input id="search" type="text" name="search" placeholder="Search title or keyword"/>
+        <button type="button" onclick="GetSearchMovie();">
+          <img src="movie/img/find_7072309.png" alt="find" width="20" height="20" style="box-shadow: none" />
+        </button>
+      </div>
+    </div>
+  `;
+  headerDiv.id = "header";
+  headerDiv.style = "display: block; visibility: visible";
+  container.prepend(headerDiv);
+
+  initializeBestDomain();
+  GetNowPlaying();
+  GetTrending();
+  GetSimilar();
+  GetRecommendations();
+  GetTopRated();
+  GetTopRatedKoreanMovies();
+  GetTopRatedKoreanTV();
+  GetPopular();
+
+  process("my_storage");
+  tvid.forEach(seriesId => {
+    GetSeriesList(seriesId);
   });
 };
 
@@ -289,6 +335,105 @@ function RenderTopRatedNow(_0x674c86, _0x2abb24, _0x1517a2, _0x977c98, _0x2c1090
     ShowModal(_0x674c86, _0x2abb24, _0x1517a2, _0x977c98, _0x2c1090);
   });
 }
+
+
+
+
+
+async function GetTopRatedKoreanMovies() {
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0Y2E1NDkyMDNlYmNlOGY2ZTFjOTMyNjQ1MzYyMjNlMCIsInN1YiI6IjY1ODNkMzI2MTgwZGVhNTQzZThiZThhOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jAc27W_LNc2uGh_9Pcl13c7_f9Mv_YGeYvWVfhE1NBI"
+    }
+  };
+  const response = await fetch("https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1&region=KR", options);
+  const data = await response.json();
+  return data || [];
+}
+
+GetTopRatedKoreanMovies().then(data => {
+  if (data.results && data.results.length > 0) {
+    TopRatedKoreanMovies(data.results);
+  }
+}).catch(error => console.error("Error:", error));
+
+async function GetTopRatedKoreanTV() {
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0Y2E1NDkyMDNlYmNlOGY2ZTFjOTMyNjQ1MzYyMjNlMCIsInN1YiI6IjY1ODNkMzI2MTgwZGVhNTQzZThiZThhOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jAc27W_LNc2uGh_9Pcl13c7_f9Mv_YGeYvWVfhE1NBI"
+    }
+  };
+  const response = await fetch("https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1&region=KR", options);
+  const data = await response.json();
+  return data || [];
+}
+
+GetTopRatedKoreanTV().then(data => {
+  if (data.results && data.results.length > 0) {
+    TopRatedKoreanTV(data.results);
+  }
+}).catch(error => console.error("Error:", error));
+
+function TopRatedKoreanMovies(results) {
+  results.forEach(item => {
+    RenderTopRatedKoreanMovies(item.title, item.id, item.poster_path, item.overview, item.release_date, item.vote_average);
+  });
+}
+
+function TopRatedKoreanTV(results) {
+  results.forEach(item => {
+    RenderTopRatedKoreanTV(item.name, item.id, item.poster_path, item.overview, item.first_air_date, item.vote_average);
+  });
+}
+
+function RenderTopRatedKoreanMovies(title, id, posterPath, overview, releaseDate, voteAverage) {
+  const movieWrap = document.createElement("div");
+  const movieCover = document.createElement("img");
+  movieWrap.className = 'movie-wrap';
+  movieCover.src = "http://image.tmdb.org/t/p/w500/" + posterPath;
+  movieCover.title = title;
+  movieCover.className = 'movie-cover';
+  const movieVote = document.createElement("div");
+  movieVote.className = "movie-vote";
+  movieVote.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/></svg><span>&nbsp;${parseInt(voteAverage)}/10</span>`;
+  movieWrap.appendChild(movieVote);
+  movieWrap.appendChild(movieCover);
+  document.getElementById("TopRatedKoreanMovies").appendChild(movieWrap);
+  movieWrap.addEventListener("click", () => {
+    OnMyList = false;
+    ShowModal(title, id, posterPath, overview, releaseDate);
+  });
+}
+
+function RenderTopRatedKoreanTV(name, id, posterPath, overview, firstAirDate, voteAverage) {
+  const tvWrap = document.createElement("div");
+  const tvCover = document.createElement("img");
+  tvWrap.className = 'tv-wrap';
+  tvCover.src = "http://image.tmdb.org/t/p/w500/" + posterPath;
+  tvCover.title = name;
+  tvCover.className = 'tv-cover';
+  const tvVote = document.createElement("div");
+  tvVote.className = "tv-vote";
+  tvVote.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/></svg><span>&nbsp;${parseInt(voteAverage)}/10</span>`;
+  tvWrap.appendChild(tvVote);
+  tvWrap.appendChild(tvCover);
+  document.getElementById("TopRatedKoreanTV").appendChild(tvWrap);
+  tvWrap.addEventListener("click", () => {
+    OnMyList = false;
+    ShowModal(name, id, posterPath, overview, firstAirDate);
+  });
+}
+
+
+
+
+
+
+
 async function GetPopular() {
   const _0x4b2519 = {
     'method': "GET",
