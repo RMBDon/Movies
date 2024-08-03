@@ -540,6 +540,7 @@ function ShowModal(_0x230085, _0x4a67d4, _0x1ae7e9, _0x5af1b5, _0x540425) {
     _0x34c301.src = `https://${bestDomain}/embed/movie/${_0x4a67d4}`;
     _0x34c301.setAttribute('frameborder', '0');
     _0x34c301.setAttribute("allowfullscreen", "true");
+    _0x34c301.setAttribute("referrerpolicy", "origin");
     _0x30a902.removeChild(_0x30a902.firstChild);
     _0x30a902.prepend(_0x34c301);
 
@@ -607,6 +608,7 @@ function ShowSeriesModal(_0x38d5b3, _0x50ced8, _0x194da4, _0x3d0d17, _0x470b1d, 
   _0x389f85.src = `https://${bestDomain}/embed/tv/${_0x50ced8}/1/1`; //`https://${bestDomain}/embed/tv/${_0x50ced8}/1/1`
   _0x389f85.setAttribute("frameborder", '0');
   _0x389f85.setAttribute("allowfullscreen", 'true');
+   _0x389f85..setAttribute("referrerpolicy", "origin");
   _0x49e742.appendChild(_0x389f85);
   _0x173bac.forEach(_0x2e91de => {
     const _0x14f0dc = document.createElement("button");
@@ -637,6 +639,7 @@ function ShowSeriesModal(_0x38d5b3, _0x50ced8, _0x194da4, _0x3d0d17, _0x470b1d, 
           _0x389f85.src = `https://${bestDomain}/embed/tv/${_0x50ced8}/${_0x2e91de.season_number}/${_0x48788c}`;//`https://${bestDomain}/embed/tv/${_0x50ced8}/${_0x2e91de.season_number}/${_0x48788c}`
           _0x389f85.setAttribute('frameborder', '0');
           _0x389f85.setAttribute('allowfullscreen', "true");
+          _0x389f85..setAttribute("referrerpolicy", "origin");
           _0x49e742.prepend(_0x389f85);
         });
         _0x236b57.appendChild(_0x42a4d6);
