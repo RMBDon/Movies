@@ -90,30 +90,25 @@ animation: wiggle 1s infinite alternate;
 
 
 
-<script>
-        const isBraveInstalled = window.navigator.userAgent.includes('Brave');
 
-        if (isBraveInstalled) {
-               document.getElementById('floating-button').style.display = 'none';
-        } else {
-//document.getElementById('floating-button').style.display = 'none';
-            // Attempt deep linking
-            window.location.href = 'brave://open-url?url=' + encodeURIComponent(window.location.href);
-            setTimeout(() => {
-                // If deep link didn't work, show the download button
-                //document.getElementById('floating-button').style.display = 'block';
-            }, 3000); // 3 seconds in milliseconds
-					setTimeout(() => {
-            //document.getElementById('floating-button').style.display = 'none';
-        }, 30000); // 30 seconds in milliseconds
-        }
-
-    </script>
 	
 	<div id="floating-button">
         <a id="brave-link" href="https://brave.com/download/" target="_blank">
-            <button>We Recommend Opening this Portal on Brave Browser for smooth viewing (rmwifi.com)</button>
+            <button>We Recommend Opening this Portal on Brave Browser for smooth viewing (rmwifi.com) Click Here to Download</button>
         </a></div>
+	
+	<script>
 
+            setTimeout(() => {
+                // If deep link didn't work, show the download button
+                document.getElementById('floating-button').style.display = 'block';
+            }, 3000); // 3 seconds in milliseconds
+					setTimeout(() => {
+            document.getElementById('floating-button').style.display = 'none';
+        }, 30000); // 30 seconds in milliseconds
+
+    </script>
+	
+	
 </body>
 </html>
