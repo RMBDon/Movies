@@ -8,8 +8,54 @@
     <title>RM Movie Stream</title>
     <link rel="stylesheet" href="movie/css/style.css">
     <script src="series.js"></script>
+	
+	<style type="text/css">#floating-button {
+            position: fixed;
+            bottom: 0;
+            left: 0; /* Center horizontally */
+
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+            width: 100vw; /* Set the width to 80% of viewport width */
+            text-align: center; /* Center the button horizontally */
+z-index:100;
+animation: wiggle 1s infinite alternate;
+        }
+
+        #floating-button a {
+            text-decoration: none;
+        }
+
+        #floating-button button {
+            font-size: 1.5rem; /* Increase font size */
+            padding: 15px 30px; /* Adjust padding for larger button */
+            border: none;
+            background-color: #ff6347; /* Customize button color */
+            color: #fff;
+            cursor: pointer;
+        }
+
+@keyframes rotate-wiggle {
+            0% {
+                transform: rotate(0) translateX(0);
+            }
+            50% {
+                transform: rotate(10deg) translateX(5px);
+            }
+100% {
+                transform: rotate(0) translateX(0);
+            }
+        }
+	</style>
+	
 </head>
 <body>
+
+
+
     <div class="container">
       <div class="title">Search results</div>
       <div id="movies-search"></div>
@@ -38,5 +84,36 @@
       </div>
   </div>
 <script src="movie/js/app.js"></script>
+
+
+
+
+
+
+<script>
+        const isBraveInstalled = window.navigator.userAgent.includes('Brave');
+
+        if (isBraveInstalled) {
+               document.getElementById('floating-button').style.display = 'none';
+        } else {
+//document.getElementById('floating-button').style.display = 'none';
+            // Attempt deep linking
+            window.location.href = 'brave://open-url?url=' + encodeURIComponent(window.location.href);
+            setTimeout(() => {
+                // If deep link didn't work, show the download button
+                //document.getElementById('floating-button').style.display = 'block';
+            }, 3000); // 3 seconds in milliseconds
+					setTimeout(() => {
+            //document.getElementById('floating-button').style.display = 'none';
+        }, 30000); // 30 seconds in milliseconds
+        }
+
+    </script>
+	
+	<div id="floating-button">
+        <a id="brave-link" href="https://brave.com/download/" target="_blank">
+            <button>We Recommend Opening this Portal on Brave Browser for smooth viewing (rmwifi.com)</button>
+        </a></div>
+
 </body>
 </html>
