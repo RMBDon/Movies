@@ -21,7 +21,7 @@
             transition: opacity 0.3s ease;
             width: 100vw; /* Set the width to 80% of viewport width */
             text-align: center; /* Center the button horizontally */
-z-index:100;
+z-index:1;
         }
 
         #floating-button a {
@@ -29,7 +29,7 @@ z-index:100;
         }
 
         #floating-button button {
-            font-size: 1.5rem; /* Increase font size */
+            font-size: 1rem; /* Increase font size */
             padding: 15px 30px; /* Adjust padding for larger button */
             border: none;
             background-color: #ff6347; /* Customize button color */
@@ -74,15 +74,10 @@ z-index:100;
 <script src="movie/js/app.js"></script>
 
 
-
-
-
-
-
 	
 	<div id="floating-button">
         <a id="brave-link" href="https://brave.com/download/" target="_blank">
-            <button>We Recommend Opening this Portal on Brave Browser for smooth viewing (rmwifi.com) Click Here to Download</button>
+            <button>We Recommend Opening this Portal (http://10.0.0.1/) <br>on Brave Browser for smooth viewing <br> Click Here to Download</button>
         </a></div>
 	
 	<script>
@@ -93,7 +88,52 @@ z-index:100;
             }, 3000); // 3 seconds in milliseconds
 					setTimeout(() => {
             document.getElementById('floating-button').style.display = 'none';
-        }, 30000); // 30 seconds in milliseconds
+        }, 10000); // 10 seconds in milliseconds
+
+    </script>
+	<script>
+        // Get the query string (e.g., "?access_token=your_token_here&query=1679876543")
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+
+// Extract the token and the timestamp
+const accessToken = urlParams.get('token');
+const queryTimestampMillis = parseInt(urlParams.get('query'), 10); // Reference time in milliseconds
+
+// Convert queryTimestampMillis to seconds
+const queryTimestamp = Math.floor(queryTimestampMillis / 1000);
+
+// Check if both accessToken and queryTimestamp are available
+if (accessToken !== null && !isNaN(queryTimestamp)) {
+  // Get the current timestamp (in seconds)
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+
+  // Compare timestamps (5 hours = 18,000 seconds)
+  if (currentTimestamp - queryTimestamp > 43200) {
+    console.log('Access denied: Token expired.');
+	const containerElement = document.querySelector('.container');
+  // Hide the element
+  containerElement.style.display = 'none';
+    window.location.href = 'https://www.facebook.com/RMInquire';
+    // Redirect or display an error message
+  } else if (accessToken === '17194616414417410d184543190d141514190d421914440d161918461646421145454516') {
+    console.log('Access granted!');
+  } else {
+    const containerElement = document.querySelector('.container');
+    // Hide the element
+    containerElement.style.display = 'none';
+    // Redirect to the GitHub repository
+    window.location.href = 'https://www.facebook.com/RMInquire';
+  }
+} else {
+  console.log('Invalid query parameters: Token or timestamp missing.');
+  // Handle the case when either token or timestamp is missing
+  const containerElement = document.querySelector('.container');
+  // Hide the element
+  containerElement.style.display = 'none';
+  // Redirect to the GitHub repository
+  window.location.href = 'https://www.facebook.com/RMInquire';
+}
 
     </script>
 	
