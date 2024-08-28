@@ -92,38 +92,45 @@ z-index:1;
 
     </script>
 	<script>
+	
+	
         // Get the query string (e.g., "?access_token=your_token_here&query=1679876543")
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-
+const _0xde5716 = 639760049167;
+	const var2345 = 910323;
+	var token2345 = 3239 * _0xde5716;
+console.log(token2345);
 // Extract the token and the timestamp
-const accessToken = urlParams.get('token');
-const queryTimestampMillis = parseInt(urlParams.get('query'), 10); // Reference time in milliseconds
-
+const accessToken = parseInt(urlParams.get('token'), 10);
+const queryTimestampMillis = Math.round(parseInt(urlParams.get('query'), 10) / var2345); // Reference time in milliseconds
+console.log(queryTimestampMillis);
 // Convert queryTimestampMillis to seconds
 const queryTimestamp = Math.floor(queryTimestampMillis / 1000);
 
 // Check if both accessToken and queryTimestamp are available
 if (accessToken !== null && !isNaN(queryTimestamp)) {
+var _0x3b465f = new Date();
+var _0x242689 = _0x3b465f.getTime();
   // Get the current timestamp (in seconds)
-  const currentTimestamp = Math.floor(Date.now() / 1000);
+  const currentTimestamp = Math.floor( _0x242689 / 1000);
 
   // Compare timestamps (5 hours = 18,000 seconds)
-  if (currentTimestamp - queryTimestamp > 43200) {
+  if (currentTimestamp - queryTimestamp > 28800) {
     console.log('Access denied: Token expired.');
 	const containerElement = document.querySelector('.container');
   // Hide the element
   containerElement.style.display = 'none';
-    window.location.href = 'https://www.facebook.com/RMInquire';
+    //window.location.href = 'https://www.facebook.com/RMInquire';
     // Redirect or display an error message
-  } else if (accessToken === '17194616414417410d184543190d141514190d421914440d161918461646421145454516') {
+  } else if (accessToken === token2345 || accessToken === 'Trial04256') {
     console.log('Access granted!');
   } else {
     const containerElement = document.querySelector('.container');
     // Hide the element
     containerElement.style.display = 'none';
     // Redirect to the GitHub repository
-    window.location.href = 'https://www.facebook.com/RMInquire';
+    //window.location.href = 'https://www.facebook.com/RMInquire';
   }
 } else {
   console.log('Invalid query parameters: Token or timestamp missing.');
@@ -132,7 +139,7 @@ if (accessToken !== null && !isNaN(queryTimestamp)) {
   // Hide the element
   containerElement.style.display = 'none';
   // Redirect to the GitHub repository
-  window.location.href = 'https://www.facebook.com/RMInquire';
+  //window.location.href = 'https://www.facebook.com/RMInquire';
 }
 
     </script>
